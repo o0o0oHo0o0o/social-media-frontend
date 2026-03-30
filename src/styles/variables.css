@@ -1,0 +1,35 @@
+/* Global tokens (X-like modern dark + balanced light mode) */
+:root {
+  --font-main: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --x-black: #000000;
+  --x-surface-dark: #16181c;
+  --x-surface-dark-hover: #1d1f23;
+  --x-border-dark: #2f3336;
+  --x-text-dark: #e7e9ea;
+  --x-muted-dark: #71767b;
+
+  --x-white: #ffffff;
+  --x-surface-light: #f7f9f9;
+  --x-surface-light-hover: #eff3f4;
+  --x-border-light: #d9dfe3;
+  --x-text-light: #0f1419;
+  --x-muted-light: #536471;
+
+  --x-accent: #1d9bf0;
+  --x-accent-hover: #1a8cd8;
+  --x-danger: #f4212e;
+  --x-success: #00ba7c;
+
+  --color-primary: var(--x-accent);
+  --color-secondary: #2563eb;
+  --color-accent: var(--x-accent);
+  --color-success: var(--x-success);
+  --color-error: var(--x-danger);
+  --color-bg-dark: var(--x-black);
+  --color-bg-light: var(--x-white);
+  --color-text-dark: var(--x-text-light);
+  --color-text-light: var(--x-text-dark);
+  --gradient-primary: linear-gradient(135deg, #1d9bf0 0%, #1a8cd8 100%);
+  --gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #1d9bf0 100%);
+}

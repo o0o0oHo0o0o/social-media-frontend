@@ -1,0 +1,32 @@
+@media (max-width: 640px) {
+  .auth-card {
+    padding: 2rem;
+  }
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+  .otp-inputs {
+    gap: 0.5rem;
+  }
+  .otp-input {
+    font-size: 1.25rem;
+  }
+  .theme-toggle {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+  .auth-footer {
+    bottom: 1rem;
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 480px) {
+  .social-buttons {
+    flex-direction: column;
+  }
+  .password-strength {
+    grid-template-columns: 1fr;
+  }
+}

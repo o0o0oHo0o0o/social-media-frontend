@@ -1,0 +1,35 @@
+.user-page .avatar-name {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.profile-info .username {
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+.profile-info .icon {
+  max-width: 4rem;
+  max-height: 4rem;
+}
+.page-controller {
+  padding: 1rem 0.25rem;
+}
+.page-controller button {
+  padding: 0 0.875rem;
+  background-color: transparent;
+  line-height: 2.25rem;
+  border-radius: 999px;
+}
+.page-controller button:hover {
+  text-decoration: underline;
+}
+.page-controller .active {
+  background-color: var(--overlay-color);
+}
+.user-container .more-info-bar {
+  display: flex;
+  align-items: start;
+  padding-top: 0;
+}

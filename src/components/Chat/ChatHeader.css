@@ -1,0 +1,176 @@
+/* ChatHeader.css */
+
+.chat-header {
+  height: 60px;
+  /* Chiều cao chuẩn */
+  padding: 0 16px;
+  background-color: #242526;
+  /* Nền tối */
+  border-bottom: 1px solid #3e4042;
+  /* Viền ngăn cách */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  /* Không bị co lại khi chat dài */
+  position: relative;
+  z-index: 10;
+}
+
+/* --- Phần Trái: Avatar + Tên --- */
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  overflow: hidden;
+  /* Tránh tên quá dài vỡ layout */
+}
+
+/* Avatar Container */
+.header-avatar-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.header-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0084ff, #00c6ff);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+/* Chấm xanh Online */
+.online-status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #31a24c;
+  /* Màu xanh lá chuẩn */
+  border: 2px solid #242526;
+  /* Viền trùng màu nền để cắt avatar */
+  border-radius: 50%;
+}
+
+/* Thông tin Text */
+.header-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.header-title {
+  color: #e4e6eb;
+  font-weight: 600;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-subtitle {
+  color: #b0b3b8;
+  /* Màu xám nhạt */
+  font-size: 12px;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Phần Phải: Actions --- */
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #0084ff;
+  /* Màu xanh chủ đạo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.header-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Icon SVG size */
+.header-icon-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Force icons visible if global CSS overrides them */
+.chat-header .header-icon-btn,
+.chat-header .header-icon-btn svg,
+.chat-header .header-icon-btn svg path {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+.chat-header .header-icon-btn {
+  color: #ffffff !important;
+  line-height: 0 !important;
+  padding: 0 !important;
+}
+
+/* Nút Info đổi màu khác cho đỡ chói */
+.header-icon-btn.info-btn {
+  color: #ffffff;
+}
+
+/* Strong overrides to avoid global chat.css conflicts and center icons */
+.chat-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 60px !important;
+  padding: 0 16px !important;
+}
+
+.chat-header .header-icon-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+}
+
+.chat-header .header-icon-btn svg {
+  display: block !important;
+  margin: 0 auto !important;
+  transform: none !important;
+}

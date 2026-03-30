@@ -1,0 +1,288 @@
+/* ChatComposer.css */
+
+/* --- Container Tổng --- */
+.chat-composer {
+  background-color: #242526;
+  border-top: 1px solid #3e4042;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 8px;
+  /* Khoảng cách giữa các phần tử */
+  padding: 12px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- Các nút bấm (Icon) --- */
+.composer-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #0084ff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin: 0;
+  padding: 0;
+}
+
+.composer-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.composer-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  display: block;
+}
+
+/* Nút Gửi (Disabled khi không có tin nhắn) */
+.composer-btn.send-text:disabled {
+  color: #4b4c4f;
+  cursor: default;
+}
+
+.composer-btn.send-text:disabled:hover {
+  background-color: transparent;
+}
+
+/* --- Ô Nhập liệu --- */
+.input-wrapper {
+  flex: 1;
+  /* Tự động giãn nở */
+  background-color: #3a3b3c;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 12px;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+
+.composer-textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 15px;
+  color: #e4e6eb;
+  line-height: 1.3;
+  max-height: 120px;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.composer-textarea::placeholder {
+  color: #b0b3b8;
+}
+
+/* --- PHẦN PREVIEW ẢNH/FILE --- */
+.preview-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 8px;
+  /* spacing between previews and textarea */
+}
+
+.preview-item {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 12px;
+  overflow: visible;
+  /* allow remove button to sit outside */
+  background-color: #3b3c3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+.preview-file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-file-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ff4d4f;
+  /* high contrast red */
+  color: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  z-index: 9999;
+  /* ensure it's on top of everything */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+.remove-file-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+  opacity: 0.98;
+}
+
+.preview-item:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* --- Giao diện Ghi âm (Overlay) --- */
+/* Khi đang ghi âm, ẩn các nút thường đi hoặc replace content */
+.recording-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #3a3b3c;
+  border-radius: 20px;
+  padding: 0 8px 0 16px;
+  height: 40px;
+  animation: slideUp 0.2s ease-out;
+}
+
+/* Các thành phần ghi âm (Timer, Wave, Cancel...) giữ nguyên như cũ */
+.recording-timer {
+  font-size: 14px;
+  color: #ff4d4f;
+  font-weight: 600;
+  min-width: 40px;
+  white-space: nowrap;
+}
+
+.audio-wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  height: 100%;
+}
+
+.wave-bar {
+  width: 3px;
+  background-color: #ff4d4f;
+  border-radius: 2px;
+  animation: waveAnim 1s ease-in-out infinite;
+}
+
+.cancel-record-btn {
+  width: 30px;
+  height: 30px;
+  color: #b0b3b8;
+}
+
+.cancel-record-btn:hover {
+  color: #ff4d4f;
+}
+
+.send-record-btn {
+  color: #0084ff;
+  width: 36px;
+  height: 36px;
+}
+
+@keyframes waveAnim {
+
+  0%,
+  100% {
+    height: 4px;
+    opacity: 0.5;
+  }
+
+  50% {
+    height: 16px;
+    opacity: 1;
+  }
+}
+
+.wave-bar:nth-child(odd) {
+  animation-duration: 0.8s;
+}
+
+.wave-bar:nth-child(2n) {
+  animation-duration: 1.1s;
+}
+
+/* Reply preview bar shown above textarea when replying */
+.reply-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #dbe2ea;
+}
+
+.reply-preview-bar .reply-left {
+  color: #8fa8ff;
+  font-weight: 600;
+}
+
+.reply-preview-bar .reply-center {
+  flex: 1;
+  opacity: 0.9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reply-preview-bar .reply-cancel {
+  background: transparent;
+  border: none;
+  color: #b0b3b8;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.reply-preview-bar .reply-cancel:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.03);
+}

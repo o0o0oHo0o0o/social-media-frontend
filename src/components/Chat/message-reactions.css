@@ -1,0 +1,292 @@
+/* message-reactions.css */
+
+/* Hàng chứa: Avatar (nếu có) + Bong bóng + Nút React */
+.message-row {
+  display: flex;
+  align-items: center;
+  /* Căn giữa theo chiều dọc */
+  gap: 12px;
+  /* Khoảng cách giữa bong bóng và icon */
+  margin-bottom: 2px;
+  width: 100%;
+  position: relative;
+  /* Quan trọng: cho phép các popup (picker) tràn ra ngoài mà không bị cắt */
+  overflow: visible;
+}
+
+/* --- LOGIC CĂN CHỈNH --- */
+
+/* Tin người khác: [Avatar] -> [Bong bóng] -> [Nút React] */
+.message-row.other {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/* Tin của mình: [Nút React] <- [Bong bóng] (Đảo ngược) */
+.message-row.me {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  /* Do đảo ngược nên start lại là bên phải */
+}
+
+
+/* --- NÚT REACT (TRIGGER) --- */
+
+.reaction-trigger-container {
+  /* Container giữ chỗ cho nút để không bị nhảy layout */
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* Don't allow the trigger container to be shrunk */
+  position: relative;
+
+  /* Mặc định ẩn hẳn để không chiếm chỗ thị giác, 
+       nhưng vẫn giữ width trong DOM để không bị giật khi hover */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+/* Khi hover vào dòng tin nhắn thì hiện container nút */
+.message-row:hover .reaction-trigger-container,
+.reaction-trigger-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reaction-trigger-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: transparent;
+  /* Trong suốt cho tinh tế */
+  color: #8a8d91;
+  /* Màu xám nhạt */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  padding: 0;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+/* Chỉ khi hover vào chính cái nút mặt cười mới hiện nền xám */
+.reaction-trigger-btn:hover,
+.reaction-trigger-container.active .reaction-trigger-btn {
+  background-color: #3e4042;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+
+/* --- PICKER (THANH CHỌN CẢM XÚC) --- */
+
+.reaction-picker-popover {
+  position: absolute;
+  bottom: 110%;
+  /* Bay lên trên, bám theo nút */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #242526;
+  border-radius: 50px;
+  padding: 4px 8px;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  white-space: nowrap;
+  align-items: center;
+  height: 40px;
+  min-width: 180px;
+  animation: popIn 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Các style khác giữ nguyên */
+.emoji-btn {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.2s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.emoji-btn:hover {
+  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.emoji-btn.selected {
+  background: rgba(45, 136, 255, 0.3);
+}
+
+/* Summary bubble (icon đã thả) */
+.reaction-summary-bubble {
+  position: absolute;
+  bottom: -12px;
+  right: 0;
+  background: #242526;
+  border: 2px solid #18191a;
+  /* Trùng màu nền main chat để tạo viền cắt */
+  border-radius: 10px;
+  padding: 1px 4px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+  height: 18px;
+}
+
+.reaction-summary-bubble.mine {
+  border-color: #5c8dff;
+  background: linear-gradient(120deg, rgba(92, 141, 255, 0.25), #242526);
+}
+
+.reaction-summary-bubble .mine-emoji {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 4px rgba(92, 141, 255, 0.6));
+}
+
+.chat-bubble.me .reaction-summary-bubble {
+  right: auto;
+  left: 0;
+  /* Tin mình thì hiện bên trái */
+}
+
+/* Avatar sizing and spacer consistency */
+.chat-bubble-avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #667eea;
+  color: #fff;
+  font-weight: 700;
+}
+
+.chat-bubble-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Message status (sent / delivered / seen) positioned relative to bubble wrapper */
+.chat-message-status {
+  position: absolute;
+  right: 0;
+  bottom: -18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.75);
+  z-index: 6;
+}
+
+.chat-message-status .chat-seen-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #666;
+  color: #fff;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.chat-message-status .chat-seen-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Ensure chat bubble can shrink without pushing siblings and wrap long text */
+.message-row .chat-bubble {
+  flex: 0 1 auto;
+  min-width: 0;
+  /* allow it to shrink below content width for overflow handling */
+}
+
+.chat-bubble-content {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.chat-status-line {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 2px;
+  min-height: 16px;
+}
+
+.status-below {
+  max-width: 80%;
+  margin-left: auto;
+  padding-right: 40px;
+}
+
+.chat-status-line span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-read-receipt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-warning-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.chat-warning-text.chat-error-text {
+  color: #ff6b6b;
+}
+
+.chat-seen-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}

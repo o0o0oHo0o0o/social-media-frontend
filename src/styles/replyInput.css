@@ -1,0 +1,88 @@
+.add-reply-box {
+  margin-top: 8px;
+  animation: fadeIn 0.2s ease-in;
+  width: 100%;
+}
+
+.reply-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: var(--border);
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.reply-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.reply-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.reply-btn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.app .post-btn {
+  background: var(--accent);
+  color: #eff1f5;
+}
+
+.post-btn:hover:not(:disabled) {
+  background: var(--accent);
+}
+
+.post-btn:disabled {
+  background: none;
+  cursor: not-allowed;
+  color: var(--text-color);
+}
+
+.cancel-btn {
+  background: transparent;
+  color: #7c7c7c;
+}
+
+.cancel-btn:hover {
+  background: #f6f7f8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-reply-trigger:hover {
+  background-color: var(--overlay-color);
+}
+
+.add-reply-trigger {
+  cursor: "pointer";
+  color: var(--overlay-color);
+  font-size: 0.875rem;
+  padding: 1rem;
+  border: var(--border);
+  border-radius: 1.25rem;
+  line-height: 1.25rem;
+}

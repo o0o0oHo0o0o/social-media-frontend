@@ -1,0 +1,72 @@
+.remember-forgot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.remember-me {
+  margin: 0;
+}
+
+.forgot-password {
+  margin: 0;
+  text-align: right;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+.app.light .checkbox-label {
+  color: #1f2937;
+  /* chữ đậm, tương phản ở light mode */
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid #a78bfa;
+  background-color: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: all 0.2s ease;
+}
+
+.app.light .checkbox-label input[type="checkbox"] {
+  border-color: #82b1ff;
+  background-color: #ffffff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+  border: 2px solid #a78bfa;
+  background-color: #a78bfa;
+  position: relative;
+}
+
+.app.light .checkbox-label input[type="checkbox"]:checked {
+  background-color: #82b1ff;
+  border-color: #82b1ff;
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

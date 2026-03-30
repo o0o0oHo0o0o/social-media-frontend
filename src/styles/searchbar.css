@@ -1,0 +1,150 @@
+.content-container {
+  padding-top: 56px;
+}
+.header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  top: 0;
+  height: 56px;
+  width: 100%;
+  z-index: 99;
+  border-bottom: var(--border);
+}
+
+.app .header__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.header__icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  fill: currentColor;
+}
+.header__icon path {
+  stroke: var(--accent);
+}
+
+.header__icon:hover {
+  opacity: 0.8;
+}
+
+.header__brand {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  user-select: none;
+}
+
+.header__search {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 2.5rem;
+  max-width: 700px; /* Reddit uses a wider search on desktop */
+  width: 560px;
+  margin: 0 16px;
+  position: relative;
+  border-radius: 1.25rem;
+  line-height: 1.25rem;
+  padding-right: 0.25rem;
+  background-color: var(--button-color);
+  border: 1px solid var(--accent);
+}
+
+.header__search-input {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  border: none;
+  outline: none;
+  border-radius: 1.25rem;
+  box-sizing: border-box;
+}
+
+.header__search:focus-within {
+  border: var(--border);
+  border-color: var(--text-color);
+  box-shadow: 0 0 5px 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.header__search-button {
+  height: 100%;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: transparent;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.app .header__nav-button {
+  font-weight: 600;
+  height: 100%;
+  background: var(--accent);
+  padding: 6px 0.75rem;
+  border-radius: 1.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+  color: #eff1f5;
+}
+.app .create-post-btn {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__nav-button:hover {
+  background-color: var(--overlay-color);
+  color: var(--text-color);
+}
+.header__right .profile {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: transparent;
+}
+.header__right .profile:hover {
+  background-color: var(--overlay-color);
+}
+.header__right svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Optional: Mobile responsiveness (hide some items on small screens) */
+@media (max-width: 768px) {
+  .header__search {
+    max-width: 300px;
+  }
+
+  .header__right {
+    gap: 4px;
+  }
+
+  .header__nav-button {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+}

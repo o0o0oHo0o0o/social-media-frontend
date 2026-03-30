@@ -1,0 +1,46 @@
+.search-page .avatar-name {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--overlay-color);
+  padding: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  border-radius: 1rem;
+}
+
+.search-page .avatar-name:hover {
+  background-color: var(--overlay-color);
+}
+
+.avatar-name svg,
+.avatar-name img {
+  max-width: 3rem;
+  max-height: 3rem;
+  margin: 0;
+}
+
+.search-active-view {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 1rem;
+}
+
+.search-active-chip {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.search-active-keyword,
+.search-active-count {
+  font-size: 0.82rem;
+  color: var(--sub-text-color);
+}

@@ -1,0 +1,108 @@
+/* OTP VERIFICATION */
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: slideUp 0.5s ease;
+}
+.otp-header {
+  text-align: center;
+}
+.otp-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.otp-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.app.light .otp-header h2 {
+  color: #1f2937;
+}
+.otp-header p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+.app.light .otp-header p {
+  color: rgba(0, 0, 0, 0.6);
+}
+.otp-header strong {
+  color: #667eea;
+  font-weight: 600;
+}
+.otp-inputs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.otp-input {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.app.light .otp-input {
+  background: white;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1f2937;
+}
+.otp-input:focus {
+  border-color: #667eea;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: scale(1.05);
+}
+.app.light .otp-input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+.otp-input.error {
+  border-color: #ef4444;
+  animation: shake 0.4s ease;
+}
+.otp-input.success {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+.otp-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.otp-footer p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+.app.light .otp-footer p {
+  color: rgba(0, 0, 0, 0.6);
+}
+.countdown {
+  color: rgba(255, 255, 255, 0.5);
+}
+.app.light .countdown {
+  color: rgba(0, 0, 0, 0.4);
+}

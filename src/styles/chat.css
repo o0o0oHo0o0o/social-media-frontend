@@ -1,0 +1,1208 @@
+/* ================================================= */
+/* 1. GLOBAL LAYOUT & SIDEBAR (KEPT FROM YOUR ORIGINAL) */
+/* ================================================= */
+.chat-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 380px) 1fr;
+  gap: 0;
+  width: 100vw;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  max-height: none;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.chat-sidebar {
+  background: rgba(30, 30, 40, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
+}
+
+.chat-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Actions in sidebar header (Feed, Logout) */
+.chat-sidebar-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sidebar-action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sidebar-action-btn .action-icon {
+  font-weight: 700;
+  color: inherit;
+}
+
+.sidebar-action-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.chat-sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-sidebar-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.chat-avatar-me {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+}
+
+.chat-conn {
+  font-size: 12px;
+  opacity: .8;
+}
+
+.chat-ws,
+.chat-adder {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chat-label {
+  font-size: 12px;
+  opacity: .8;
+}
+
+.chat-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Search bar */
+.chat-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chat-search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+}
+
+.chat-input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: inherit;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  min-height: 0;
+}
+
+.chat-item {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.10);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.chat-item.active {
+  outline: 2px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.20);
+}
+
+.chat-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.chat-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-title {
+  font-weight: 600;
+}
+
+.chat-preview {
+  opacity: .8;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-time {
+  opacity: .6;
+  font-size: 12px;
+}
+
+.chat-unread {
+  font-size: 12px;
+  background: #8ab4f8;
+  color: #0b1025;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.chat-empty {
+  opacity: .7;
+  font-size: 14px;
+}
+
+.chat-empty.large {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 40px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ================================================= */
+/* 2. MAIN CHAT AREA (UPDATED CONTAINER) */
+/* ================================================= */
+.chat-main {
+  background: rgba(30, 30, 40, 0.85);
+  backdrop-filter: blur(12px);
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  /* Remove padding to let messages flow to edges */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
+  /* Match sidebar height constraint */
+  overflow: hidden;
+  position: relative;
+  min-width: 0;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(30, 30, 40, 0.95);
+  /* Slight background for header */
+  z-index: 10;
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-header-title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.chat-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-icon-btn {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  color: inherit;
+}
+
+.chat-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+/* Top-right global action */
+.chat-global-actions {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.chat-action-btn {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s, transform 0.2s;
+  color: inherit;
+}
+
+.chat-action-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.chat-back-btn {
+  background: rgba(0, 121, 211, 0.2);
+  border-color: rgba(0, 121, 211, 0.4);
+  color: #0079d3;
+}
+
+.chat-back-btn:hover {
+  background: rgba(0, 121, 211, 0.35);
+}
+
+.chat-action-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .chat-layout {
+    width: 92vw;
+    grid-template-columns: 340px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-layout {
+    width: 96vw;
+    grid-template-columns: 1fr;
+  }
+
+  .chat-sidebar {
+    display: none;
+    /* Hide sidebar on mobile when chatting */
+  }
+
+  .chat-sidebar.active {
+    display: flex;
+    z-index: 20;
+    position: fixed;
+    inset: 0;
+  }
+
+  .message-group-content {
+    max-width: 80%;
+  }
+}
+
+/* ================================================= */
+/* 3. MESSAGES LIST & SYSTEM (UPDATED FOR NEW STRUCTURE) */
+/* ================================================= */
+.chat-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  /* Close gap between messages like Messenger */
+  padding: 20px 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* System Message (Centered, Gray) */
+.message-system {
+  text-align: center;
+  margin: 16px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.message-system span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+/* Thời gian tách biệt (Message time separator) */
+.message-time-separator {
+  text-align: center;
+  margin: 20px 0 10px 0;
+  clear: both;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message-time-separator span {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8e8e8e;
+  text-transform: uppercase;
+  background-color: rgba(0, 0, 0, 0.12);
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+/* Typing indicator bubble (3 animated dots) */
+.typing-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.typing-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.9);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.typing-bubble {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+}
+
+.typing-bubble.other {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.typing-dots {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.typing-dots span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  transform: translateY(0);
+  opacity: 0.9;
+  animation: typing-bounce 1s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+@keyframes typing-bounce {
+
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+.loading-text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+/* ================================================= */
+/* 4. MESSAGE GROUPS & BUBBLES (KEY UPDATE)          */
+/* ================================================= */
+
+/* Wrapper for a message group (Avatar + Bubble List) */
+.message-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  /* Gap between different speakers */
+  width: 100%;
+  align-items: flex-end;
+  /* Avatar stays at bottom */
+}
+
+/* Avatar for others */
+.message-group-avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+  /* Slightly lower avatar so it lines up better with message bubble text */
+  cursor: pointer;
+}
+
+.message-group-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: translateY(3px);
+  object-fit: cover;
+}
+
+/* Column containing bubbles */
+.message-group-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  min-width: 0;
+}
+
+/* Sender Name (small, faded) */
+.message-group-name {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+  margin-left: 12px;
+}
+
+/* Message Row (Bubble + Actions + Status) */
+.message-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2px;
+  position: relative;
+  width: 100%;
+}
+
+/* Wrapper: Bubble + Action (Side-by-side) */
+
+/* Wrapper: Bubble + Action (Side-by-side) */
+.chat-bubble-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Theme variables & chat background (modern, solid colors, no gradients) */
+:root {
+  --chat-bg: #000000;
+  --bubble-blue: #0b84ff;
+  --bubble-blue-dark: #07213a;
+  --bubble-text: #ffffff;
+  --muted-text: rgba(255, 255, 255, 0.65);
+}
+
+.chat-messages,
+.chat-empty,
+.chat-container,
+.messenger-main {
+  background: var(--chat-bg);
+}
+
+.message-group.me .chat-bubble-wrapper {
+  flex-direction: row;
+}
+
+.message-group:not(.me) .chat-bubble-wrapper {
+  flex-direction: row-reverse;
+}
+
+/* --- BUBBLE STYLING --- */
+.chat-bubble {
+  position: relative;
+  padding: 10px 14px;
+  /* Comfortable padding */
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  max-width: 100%;
+  color: #fff;
+  z-index: 1;
+  /* Ensure bubble is above actions if overlapping */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Attachment Images */
+.chat-attachment {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 6px;
+  cursor: pointer;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* --- STYLE FOR OTHERS (LEFT) --- */
+.message-group:not(.me) .message-group-content {
+  align-items: flex-start;
+}
+
+.message-group:not(.me) .message-row {
+  align-items: flex-start;
+}
+
+.chat-bubble.other {
+  background: var(--bubble-blue-dark);
+  color: #dbeeff;
+  border-radius: 4px 18px 18px 4px;
+  box-shadow: 0 8px 24px rgba(2, 12, 22, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.chat-bubble.other:first-of-type {
+  border-top-left-radius: 18px;
+}
+
+.chat-bubble.other:last-of-type {
+  border-bottom-left-radius: 18px;
+}
+
+/* --- STYLE FOR ME (RIGHT) --- */
+.message-group.me {
+  flex-direction: row-reverse;
+  /* Flip layout */
+}
+
+.message-group.me .message-group-content {
+  align-items: flex-end;
+}
+
+.message-group.me .message-row {
+  align-items: flex-end;
+}
+
+.message-group.me .chat-bubble-wrapper {
+  flex-direction: row;
+  /* Actions left of bubble for own messages */
+}
+
+.chat-bubble.me {
+  background: var(--bubble-blue);
+  color: var(--bubble-text);
+  border-radius: 18px 4px 4px 18px;
+  box-shadow: 0 8px 24px rgba(11, 132, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.chat-bubble.me:first-of-type {
+  border-top-right-radius: 18px;
+}
+
+.chat-bubble.me:last-of-type {
+  border-bottom-right-radius: 18px;
+}
+
+.message-group.me .message-group-name {
+  display: none;
+  /* Hide own name */
+}
+
+/* ================================================= */
+/* 5. REACTION SYSTEM (MENU & TRIGGER)               */
+/* ================================================= */
+
+/* Container for trigger button & menu */
+
+/* Vùng chứa nút trigger (mặt cười) */
+.chat-actions {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  position: relative;
+}
+
+.message-group.me .chat-actions {
+  margin-right: 8px;
+  margin-left: 0;
+}
+
+.message-group:not(.me) .chat-actions {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+/* Show trigger on hover */
+.chat-bubble-wrapper:hover .chat-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Trigger Button (Smiley Face) */
+.reaction-trigger {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.reaction-trigger:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* POPUP MENU (Emoji List) */
+
+.reaction-menu {
+  display: none;
+  /* Hidden by default */
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(6, 10, 18, 0.95);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 6px 10px;
+  gap: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  white-space: nowrap;
+}
+
+/* Portal version: always fixed, never clipped, above trigger */
+.reaction-menu.portal {
+  display: flex !important;
+  position: fixed !important;
+  /* allow inline left/top from portal JS to position element */
+  transform: translate(-50%, -120%) !important;
+  /* appear directly above the trigger (move up by ~120% of its height)
+     and centered horizontally relative to the provided left coordinate */
+  animation: popUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 95vw;
+  max-height: 60px;
+  overflow-x: auto;
+  pointer-events: auto;
+}
+
+/* Show menu on hover over actions area */
+.chat-actions:hover .reaction-menu {
+  display: flex;
+  animation: popUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.reaction-item {
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.reaction-item:hover {
+  transform: scale(1.3);
+}
+
+/* Display reactions attached to a message */
+.message-reactions-display {
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  background: rgba(40, 40, 50, 0.95);
+  border-radius: 10px;
+  padding: 2px 4px;
+  font-size: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.message-group.me .message-reactions-display {
+  right: auto;
+  left: 0;
+}
+
+@keyframes popUp {
+  from {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ================================================= */
+/* 6. STATUS (SEEN / SENT)                           */
+/* ================================================= */
+.seen-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  margin-right: 2px;
+  height: 16px;
+}
+
+.seen-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(30, 30, 40, 1);
+  /* Match background to create spacing */
+  object-fit: cover;
+}
+
+.status-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: right;
+  margin-right: 4px;
+  margin-top: 2px;
+}
+
+/* ================================================= */
+/* 7. COMPOSER (TYPING AREA)                         */
+/* ================================================= */
+.chat-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.chat-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 24px;
+  max-height: 120px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  padding: 4px 0;
+  font-size: 15px;
+  line-height: 1.4;
+  resize: none;
+  outline: none;
+}
+
+.chat-composer-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.chat-files-preview {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.chat-file-item {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chat-file-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Typing Indicator (in list) */
+.chat-typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  width: fit-content;
+}
+
+.chat-typing-indicator .dot {
+  font-size: 20px;
+  line-height: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  animation: typing 1.4s infinite ease-in-out both;
+}
+
+.chat-typing-indicator .dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.chat-typing-indicator .dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing {
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Ensure main area can host absolute snow canvas and keep content above it */
+.chat-main {
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-main>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* Distinctive ambient sweep layer for the messenger surface */
+.chat-main::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(0, 166, 255, 0.2), transparent 42%),
+    radial-gradient(circle at 85% 35%, rgba(61, 255, 189, 0.14), transparent 45%),
+    radial-gradient(circle at 45% 85%, rgba(33, 110, 255, 0.15), transparent 46%);
+  filter: blur(26px) saturate(112%);
+  opacity: 0.58;
+  transform: translate3d(0, 0, 0);
+  animation: auroraSweep 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Entrance animations for richer UX without JS */
+.chat-sidebar {
+  animation: sidebarReveal 640ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.chat-main {
+  animation: mainReveal 760ms cubic-bezier(0.16, 0.9, 0.2, 1) both;
+}
+
+.message-row {
+  animation: bubbleReveal 460ms cubic-bezier(0.17, 0.84, 0.26, 1) both;
+  transform-origin: left center;
+}
+
+.message-group.me .message-row {
+  animation-name: bubbleRevealMe;
+  transform-origin: right center;
+}
+
+.message-row:nth-child(1) {
+  animation-delay: 28ms;
+}
+
+.message-row:nth-child(2) {
+  animation-delay: 56ms;
+}
+
+.message-row:nth-child(3) {
+  animation-delay: 84ms;
+}
+
+.message-row:nth-child(4) {
+  animation-delay: 112ms;
+}
+
+.message-row:nth-child(5) {
+  animation-delay: 140ms;
+}
+
+@keyframes sidebarReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-22px) scale(0.985);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes mainReveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes bubbleReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-16px) translateY(7px) scale(0.96);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes bubbleRevealMe {
+  from {
+    opacity: 0;
+    transform: translateX(16px) translateY(7px) scale(0.96);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes auroraSweep {
+  0% {
+    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1);
+    opacity: 0.44;
+  }
+
+  50% {
+    transform: translate3d(2%, 1%, 0) rotate(3deg) scale(1.06);
+    opacity: 0.62;
+  }
+
+  100% {
+    transform: translate3d(5%, -3%, 0) rotate(-2deg) scale(1.02);
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .chat-layout {
+    grid-template-columns: 1fr;
+    width: 100%;
+    height: 100dvh;
+  }
+
+  .chat-sidebar {
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+  }
+
+  .chat-main {
+    width: 100%;
+    min-height: 100dvh;
+  }
+
+  .chat-header {
+    min-height: 54px;
+    padding: 10px 12px;
+  }
+
+  .chat-header-title,
+  .header-title {
+    font-size: 14px;
+  }
+
+  .chat-messages {
+    padding: 12px 10px;
+    gap: 0;
+  }
+
+  .message-group {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .message-group-content {
+    max-width: 84%;
+  }
+
+  .chat-bubble {
+    font-size: 13px;
+    line-height: 1.35;
+    padding: 8px 11px;
+  }
+
+  .chat-composer {
+    padding: 10px;
+    gap: 6px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .chat-input-wrapper {
+    padding: 7px 10px;
+    gap: 8px;
+  }
+
+  .chat-textarea {
+    font-size: 13px;
+    max-height: 88px;
+  }
+}
+
+@media (max-width: 420px) and (orientation: portrait) {
+  .message-group-content {
+    max-width: 88%;
+  }
+
+  .message-group-avatar {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .typing-bubble {
+    padding: 7px 10px;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .chat-sidebar,
+  .chat-main,
+  .message-row,
+  .chat-main::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Snow canvas overlay (behind UI but above background) */
+.snow-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+/* Reaction list modal tweaks */
+.reaction-modal-backdrop {
+  -webkit-font-smoothing: antialiased;
+}
+
+.reaction-modal img {
+  background: rgba(255, 255, 255, 0.02);
+}

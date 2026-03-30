@@ -1,0 +1,265 @@
+/* Styles specific to the Messenger page.
+   Migrate relevant rules from src/styles/chat.css into this file
+   to scope styles to the Messenger page. */
+
+.chat-messenger-container {
+  --accent-blue: #1976d2;
+  --accent-blue-strong: #0d47a1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #000;
+  /* pure black */
+  color: #fff;
+}
+
+.chat-messages {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 12px;
+  background: transparent;
+}
+
+.chat-global-actions {
+  padding: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Reactions UI */
+.reaction-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  align-items: center;
+}
+
+.reaction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+
+.reaction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+}
+
+.reaction-badge.mine {
+  background: linear-gradient(90deg, rgba(25, 118, 210, 0.18), rgba(13, 71, 161, 0.12));
+  box-shadow: 0 8px 22px rgba(13, 71, 161, 0.12);
+  border: 1px solid rgba(25, 118, 210, 0.18);
+}
+
+.reaction-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.reaction-dialog {
+  background: #071022;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 280px;
+  max-width: 420px;
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(25, 118, 210, 0.08);
+}
+
+.reaction-dialog h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.reaction-list {
+  max-height: 320px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reaction-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.reaction-item .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.reaction-dialog .close-btn {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Reply quote block inside chat bubble */
+.reply-quote-block {
+  display: flex;
+  margin-bottom: 6px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  position: relative;
+  font-size: 13px;
+  max-width: 100%;
+}
+
+.chat-bubble.me .reply-quote-block {
+  background-color: rgba(0, 0, 0, 0.14);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.chat-bubble.other .reply-quote-block {
+  background-color: rgba(0, 0, 0, 0.04);
+  color: #65676b;
+}
+
+.reply-quote-line {
+  width: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+.chat-bubble.other .reply-quote-line {
+  background-color: #bcc0c4;
+}
+
+.reply-quote-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.reply-quote-name {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 2px;
+  opacity: 0.9;
+}
+
+.reply-quote-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.8;
+}
+
+/* Full-width messenger surface */
+.chat-layout {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Light mode fixes for message UI */
+.app.light .chat-sidebar {
+  background-color: #ffffff !important;
+  border-right: 1px solid var(--x-border-light) !important;
+  color: var(--x-text-light) !important;
+}
+
+.app.light .chat-sidebar-title-large,
+.app.light .chat-name,
+.app.light .chat-title,
+.app.light .header-title {
+  color: var(--x-text-light) !important;
+}
+
+.app.light .chat-main {
+  background: #ffffff !important;
+  color: var(--x-text-light) !important;
+}
+
+.app.light .chat-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid var(--x-border-light) !important;
+  box-shadow: none !important;
+}
+
+.app.light .header-subtitle,
+.app.light .chat-meta,
+.app.light .chat-preview-row,
+.app.light .preview-text,
+.app.light .chat-empty.large {
+  color: var(--x-muted-light) !important;
+}
+
+.app.light .chat-item {
+  background-color: transparent !important;
+}
+
+.app.light .chat-item:hover {
+  background-color: #eff3f4 !important;
+}
+
+.app.light .chat-item.active {
+  background-color: rgba(29, 155, 240, 0.12) !important;
+}
+
+.app.light .search-input-wrapper,
+.app.light .input-wrapper {
+  background-color: #eff3f4 !important;
+}
+
+.app.light .search-input-wrapper input,
+.app.light .composer-textarea {
+  color: var(--x-text-light) !important;
+}
+
+.app.light .search-input-wrapper input::placeholder,
+.app.light .composer-textarea::placeholder,
+.app.light .reply-preview-bar .reply-cancel {
+  color: var(--x-muted-light) !important;
+}
+
+.app.light .chat-composer {
+  background-color: #ffffff !important;
+  border-top: 1px solid var(--x-border-light) !important;
+}
+
+.app.light .composer-btn,
+.app.light .header-icon-btn,
+.app.light .icon-btn {
+  color: var(--x-accent) !important;
+}
+
+.app.light .icon-btn,
+.app.light .header-icon-btn:hover,
+.app.light .composer-btn:hover {
+  background-color: rgba(15, 20, 25, 0.08) !important;
+}

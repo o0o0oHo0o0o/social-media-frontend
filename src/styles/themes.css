@@ -1,0 +1,46 @@
+/* Theme classes for dark and light mode */
+.app.dark {
+  --background-color: var(--x-black);
+  --surface-color: var(--x-surface-dark);
+  --surface-hover-color: var(--x-surface-dark-hover);
+  --text-color: var(--x-text-dark);
+  --sub-text-color: var(--x-muted-dark);
+  --overlay-color: rgba(231, 233, 234, 0.08);
+  --button-color: var(--x-surface-dark);
+  --accent: var(--x-accent);
+  --accent-hover: var(--x-accent-hover);
+  --border: 1px solid var(--x-border-dark);
+
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.app.light {
+  --background-color: var(--x-white);
+  --surface-color: var(--x-surface-light);
+  --surface-hover-color: var(--x-surface-light-hover);
+  --text-color: var(--x-text-light);
+  --sub-text-color: var(--x-muted-light);
+  --overlay-color: rgba(15, 20, 25, 0.08);
+  --button-color: var(--x-surface-light);
+  --accent: var(--x-accent);
+  --accent-hover: var(--x-accent-hover);
+  --border: 1px solid var(--x-border-light);
+
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+body {
+  font-family: var(--font-main);
+}
+
+.app .grid {
+  color: var(--text-color);
+  background: var(--background-color);
+}
+
+.app .grid .header {
+  background: var(--surface-color);
+  border-bottom: var(--border);
+}
