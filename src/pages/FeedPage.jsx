@@ -11,6 +11,9 @@ import UserPage from "../components/Feed/UserPage";
 import UserInfoCard from "../components/Feed/UserInfoCard";
 import SearchPage from "../components/Feed/SearchPage";
 import { PostApi, UserApi } from "../utils/feedApi";
+import { CONFIG } from "../config/constants";
+
+const API_BASE = CONFIG.API_BASE_URL || "";
 
 const normalizeUser = (user, fallbackUsername = "") => {
   const username =
@@ -100,7 +103,7 @@ const FeedPage = ({
   const fetchFeed = async () => {
     setLoading(true);
     try {
-      const response = await FeedApi.getFeedFrom(`http://localhost:8080/api/feed/${urlTab}`);
+      const response = await FeedApi.getFeedFrom(`${API_BASE}/api/feed/${urlTab}`);
       const data = await response.json();
       setFeed(Array.isArray(data) ? data.map(normalizePost) : []);
     } catch (error) {

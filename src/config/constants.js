@@ -28,10 +28,9 @@ const RECAPTCHA_V3_KEY = (
   ''
 ).trim();
 
-// API base URL và prefix (empty = use Vite proxy in dev)
-// Use VITE_API_BASE when provided; otherwise default to empty string so
-// dev server proxy (vite.config.js) forwards requests and cookies correctly.
-const API_BASE = (env.VITE_API_BASE || '').trim();
+// API base URL và prefix
+// Ưu tiên biến môi trường, fallback về backend Render để tránh hard-code localhost.
+const API_BASE = (env.VITE_API_BASE || 'https://social-media-backend-s3qe.onrender.com').trim();
 // Luôn bỏ API prefix để khớp BE map `/auth/*` (tránh bị `/api/auth/*`)
 const API_PREFIX = (env.VITE_API_PREFIX || '').trim();
 
@@ -41,8 +40,7 @@ const API_PREFIX = (env.VITE_API_PREFIX || '').trim();
 
 export const CONFIG = {
   // API Configuration
-  // Sửa thành cổng Backend Spring Boot (8080) per request
-  API_BASE_URL: 'http://localhost:8080',
+  API_BASE_URL: API_BASE,
   API_PREFIX: API_PREFIX,
 
   // App Info
@@ -56,8 +54,8 @@ export const CONFIG = {
 
   // OAuth Redirect URLs (must use absolute URL to backend - proxy doesn't work for window.location)
   OAUTH_REDIRECT: {
-    GOOGLE: `http://localhost:8080/oauth2/authorization/google`,
-    FACEBOOK: `http://localhost:8080/oauth2/authorization/facebook`
+    GOOGLE: `${API_BASE}/oauth2/authorization/google`,
+    FACEBOOK: `${API_BASE}/oauth2/authorization/facebook`
   },
 
   // Debug

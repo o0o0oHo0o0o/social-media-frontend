@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import FeedItem from "../components/Feed/FeedItem";
 import { FeedApi } from "../utils/feedApi";
+import { CONFIG } from "../config/constants";
+
+const API_BASE = CONFIG.API_BASE_URL || "";
 const FeedPage = ({ userId, currentView, openPost }) => {
   const [feed, setFeed] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -90,7 +93,7 @@ const FeedPage = ({ userId, currentView, openPost }) => {
 
   useEffect(() => {
     const api = (() => {
-      const link = "http://localhost:8080/api/feed/";
+      const link = `${API_BASE}/api/feed/`;
       switch (currentView) {
         case "home":
           return link + `${userId}`;

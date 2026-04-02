@@ -40,11 +40,6 @@ const Comment = ({
           const response = await (parentCommentId
             ? CommentApi.getFromComment(parentCommentId)
             : CommentApi.getFromPost(postId));
-          // const response = await fetch(
-          //   postId
-          //     ? `http://localhost:8080/api/comments/${postId}?page=0&size=10`
-          //     : `http://localhost:8080/api/comments/parent/${parentCommentId}?page=0&size=10`,
-          // );
 
           if (!response.ok) {
             throw new Error("Không tải được bình luận");

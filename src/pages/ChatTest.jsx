@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import '../styles/button.css';
 import Button from '../components/Common/Button';
 import api from '../services/api';
+import { CONFIG } from '../config/constants';
 
 // Max 5MB per file
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -21,7 +22,7 @@ export default function ChatTest({ onBack }) {
   const [sendingResp, setSendingResp] = useState(null);
 
   // WebSocket/STOMP
-  const [wsBase, setWsBase] = useState('http://localhost:8080');
+  const [wsBase, setWsBase] = useState(CONFIG.API_BASE_URL || 'https://social-media-backend-s3qe.onrender.com');
   const [connected, setConnected] = useState(false);
   const stompRef = useRef(null);
   const subscriptionRef = useRef(null);
@@ -84,7 +85,7 @@ export default function ChatTest({ onBack }) {
   };
 
   const wsUrl = useMemo(() => {
-    // http://localhost:8080 -> ws://localhost:8080/ws
+    // https://... -> wss://.../ws, http://... -> ws://.../ws
     const isHttps = wsBase.startsWith('https://');
     const scheme = isHttps ? 'wss://' : 'ws://';
     const path = '/ws';

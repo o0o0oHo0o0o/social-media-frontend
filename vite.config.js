@@ -7,6 +7,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const port = Number(env.VITE_PORT) || 5173
+  const apiTarget = env.VITE_API_BASE || 'https://social-media-backend-s3qe.onrender.com'
   return {
     plugins: [
       react({
@@ -21,31 +22,31 @@ export default defineConfig(({ mode }) => {
       host: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:8080',
+          target: apiTarget,
           changeOrigin: true,
           secure: false,
           cookieDomainRewrite: { '*': '' }
         },
         '/verification': {
-          target: 'http://localhost:8080',
+          target: apiTarget,
           changeOrigin: true,
           secure: false,
           cookieDomainRewrite: { '*': '' }
         },
         '/auth': {
-          target: 'http://localhost:8080',
+          target: apiTarget,
           changeOrigin: true,
           secure: false,
           cookieDomainRewrite: { '*': '' }
         },
         '/chat': {
-          target: 'http://localhost:8080',
+          target: apiTarget,
           changeOrigin: true,
           secure: false,
           cookieDomainRewrite: { '*': '' }
         },
         '/ws': {
-          target: 'http://localhost:8080',
+          target: apiTarget,
           changeOrigin: true,
           ws: true,
           secure: false

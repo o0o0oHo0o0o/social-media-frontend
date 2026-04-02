@@ -1,5 +1,9 @@
 import { useState, useCallback } from 'react';
 import api from '../services/api';
+import { CONFIG } from '../config/constants';
+
+const API_BASE = CONFIG.API_BASE_URL || '';
+const withBase = (path) => `${API_BASE}${path}`;
 
 /**
  * Hook lấy ảnh trong đoạn chat
@@ -21,7 +25,7 @@ export const useConversationPhotos = (conversationId) => {
     setLoadingPhotos(true);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/chat/${conversationId}/photos?page=${page}&size=20`,
+        withBase(`/api/chat/${conversationId}/photos?page=${page}&size=20`),
         { credentials: 'include' }
       );
       if (!response.ok) {
@@ -67,7 +71,7 @@ export const useConversationFiles = (conversationId) => {
     setLoadingFiles(true);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/chat/${conversationId}/files?page=${page}&size=10`,
+        withBase(`/api/chat/${conversationId}/files?page=${page}&size=10`),
         { credentials: 'include' }
       );
       if (!response.ok) throw new Error('Failed to fetch files');
@@ -106,7 +110,7 @@ export const useConversationMembers = (conversationId) => {
     setLoadingMembers(true);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/chat/${conversationId}/members/details`,
+        withBase(`/api/chat/${conversationId}/members/details`),
         { credentials: 'include' }
       );
       if (!response.ok) throw new Error('Failed to fetch members');

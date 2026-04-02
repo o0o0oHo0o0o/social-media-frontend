@@ -1,3 +1,8 @@
+import { CONFIG } from "../config/constants";
+
+const API_BASE = CONFIG.API_BASE_URL || "";
+const withBase = (path) => `${API_BASE}${path}`;
+
 const FeedApi = (function () {
   async function getFeedFrom(api) {
     return await fetch(api, {
@@ -19,12 +24,12 @@ const CommentApi = (function () {
   };
   const getFromComment = async function (parentCommentId) {
     return await fetch(
-      `http://localhost:8080/api/comments/replies/${parentCommentId}`,
+      withBase(`/api/comments/replies/${parentCommentId}`),
       { credentials: "include" },
     );
   };
   const createForPost = async function (replyData) {
-    return await fetch("http://localhost:8080/api/comments", {
+    return await fetch(withBase("/api/comments"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -35,7 +40,7 @@ const CommentApi = (function () {
     });
   };
   const createForComment = async function (replyData) {
-    return await fetch("http://localhost:8080/api/comments", {
+    return await fetch(withBase("/api/comments"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -47,7 +52,7 @@ const CommentApi = (function () {
     });
   };
   async function deleteComment(comment) {
-    return await fetch(`http://localhost:8080/api/comments/${comment.id}`, {
+    return await fetch(withBase(`/api/comments/${comment.id}`), {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -85,7 +90,7 @@ const PostApi = (function () {
     });
   }
   async function deletePost(post) {
-    return await fetch(`http://localhost:8080/api/posts/${post.id}`, {
+    return await fetch(withBase(`/api/posts/${post.id}`), {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +100,7 @@ const PostApi = (function () {
   }
   async function updateOrCreatePost(postId, formData) {
     return await fetch(
-      `http://localhost:8080/api/posts${postId ? `/${postId}` : ""}?`,
+      withBase(`/api/posts${postId ? `/${postId}` : ""}?`),
       {
         method: "POST",
         body: formData,
@@ -120,7 +125,7 @@ const PostApi = (function () {
 })();
 const ReactionApi = (function () {
   async function fetchReaction(interactableItemId) {
-    const url = `http://localhost:8080/api/reactions/stats/${interactableItemId}`;
+    const url = withBase(`/api/reactions/stats/${interactableItemId}`);
 
     const response = await fetch(url, { credentials: "include" });
 
@@ -131,7 +136,7 @@ const ReactionApi = (function () {
     return await response.json();
   }
   async function createReaction(targetId, reactionType, targetType) {
-    const res = await fetch("http://localhost:8080/api/reactions", {
+    const res = await fetch(withBase("/api/reactions"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
