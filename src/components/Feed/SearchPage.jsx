@@ -55,24 +55,33 @@ function SearchPage({
 
   useEffect(() => {
     async function fetchUserData() {
-      if (currentPage == "post") {
-        const response = await PostApi.getFromKeyword(keyword);
-        const data = await response.json();
-        setPostList([...data]);
-      } else if (currentPage == "comment") {
-        const response = await CommentApi.getFromKeyword(keyword);
-        const data = await response.json();
-        console.log(data);
-        setCommentList([
-          ...data.map((comment) => {
-            comment.replied = false;
-            return comment;
-          }),
-        ]);
-      } else {
-        const response = await UserApi.getFromKeyword(keyword);
-        const data = await response.json();
-        setUserList([...data]);
+      try {
+        if (currentPage == "post") {
+          const response = await PostApi.getFromKeyword(keyword);
+          if (!response.ok) throw new Error(`Post search failed (HTTP ${response.status})`);
+          const data = await response.json();
+          setPostList(Array.isArray(data) ? [...data] : []);
+        } else if (currentPage == "comment") {
+          const response = await CommentApi.getFromKeyword(keyword);
+          if (!response.ok) throw new Error(`Comment search failed (HTTP ${response.status})`);
+          const data = await response.json();
+          setCommentList([
+            ...((Array.isArray(data) ? data : []).map((comment) => {
+              comment.replied = false;
+              return comment;
+            })),
+          ]);
+        } else {
+          const response = await UserApi.getFromKeyword(keyword);
+          if (!response.ok) throw new Error(`User search failed (HTTP ${response.status})`);
+          const data = await response.json();
+          setUserList(Array.isArray(data) ? [...data] : []);
+        }
+      } catch (error) {
+        console.error("Search fetch failed:", error);
+        setPostList([]);
+        setCommentList([]);
+        setUserList([]);
       }
     }
     fetchUserData();

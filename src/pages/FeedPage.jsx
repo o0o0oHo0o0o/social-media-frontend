@@ -13,6 +13,7 @@ import UserInfoCard from "../components/Feed/UserInfoCard";
 import SearchPage from "../components/Feed/SearchPage";
 import { PostApi, UserApi } from "../utils/feedApi";
 import { CONFIG } from "../config/constants";
+import Dialog from "../components/Common/Dialog";
 
 const API_BASE = CONFIG.API_BASE_URL || "";
 
@@ -61,6 +62,7 @@ const FeedPage = ({
   const [selectedUser, setSelectedUser] = useState(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [authDialog, setAuthDialog] = useState({ open: false, featureName: "chức năng này" });
 
   // Derive active tab/detail from URL:
   // /feed/:tab
@@ -96,6 +98,10 @@ const FeedPage = ({
 
   // Tabs are URL-driven.
   const setCurrentView = (view) => {
+    if (!isAuthenticated && (view === "home" || view === "discussion")) {
+      requireAuthFor(view === "home" ? "xem Home" : "xem Discussion");
+      return;
+    }
     if (FEED_TABS.includes(view)) {
       navigate(`/feed/${view}`);
     }
@@ -258,13 +264,16 @@ const FeedPage = ({
   };
 
   const requireAuthFor = (featureName = "chức năng này") => {
-    const accepted = window.confirm(
-      `Bạn cần đăng nhập để ${featureName}. Bạn có muốn chuyển đến trang đăng nhập/đăng ký không?`,
-    );
-    if (accepted) {
-      navigate("/auth");
-    }
-    return accepted;
+    setAuthDialog({
+      open: true,
+      featureName,
+    });
+    return false;
+  };
+
+  const goToAuthPage = () => {
+    setAuthDialog((prev) => ({ ...prev, open: false }));
+    navigate("/auth");
   };
 
   return (
@@ -278,6 +287,7 @@ const FeedPage = ({
         isDark={isDark}
         setIsDark={setIsDark}
         onRequireAuth={requireAuthFor}
+        onGoAuth={goToAuthPage}
       />
       <Sidebar
         isDark={isDark}
@@ -360,6 +370,27 @@ const FeedPage = ({
           <div className="more-info-bar"></div>
         </div>
       )}
+
+      <Dialog
+        open={authDialog.open}
+        title="Yêu cầu đăng nhập"
+        onClose={() => setAuthDialog((prev) => ({ ...prev, open: false }))}
+        actions={(
+          <>
+            <button
+              className="dialog-btn"
+              onClick={() => setAuthDialog((prev) => ({ ...prev, open: false }))}
+            >
+              Để sau
+            </button>
+            <button className="dialog-btn primary" onClick={goToAuthPage}>
+              Đăng nhập / Đăng ký
+            </button>
+          </>
+        )}
+      >
+        Bạn cần đăng nhập để {authDialog.featureName}.
+      </Dialog>
     </div>
   );
 };

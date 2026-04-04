@@ -13,12 +13,12 @@ const FeedApi = (function () {
 })();
 const CommentApi = (function () {
   const getFromUser = async function (userId) {
-    return await fetch(`/api/comments/user/${userId}`, {
+    return await fetch(withBase(`/api/comments/user/${userId}`), {
       credentials: "include",
     });
   };
   const getFromPost = async function (postId) {
-    return await fetch(`/api/comments/post/${postId}`, {
+    return await fetch(withBase(`/api/comments/post/${postId}`), {
       credentials: "include",
     });
   };
@@ -61,7 +61,7 @@ const CommentApi = (function () {
     });
   }
   const getFromKeyword = async function (keyword) {
-    return await fetch(`/api/comments/search/${keyword}`, {
+    return await fetch(withBase(`/api/comments/search/${keyword}`), {
       method: "GET",
       credentials: "include",
     });
@@ -78,13 +78,13 @@ const CommentApi = (function () {
 })();
 const PostApi = (function () {
   async function getFromId(postId) {
-    return await fetch(`/api/posts/${postId}`, {
+    return await fetch(withBase(`/api/posts/${postId}`), {
       method: "GET",
       credentials: "include",
     });
   }
   async function getFromUser(userId) {
-    return await fetch(`/api/posts/user/${userId}`, {
+    return await fetch(withBase(`/api/posts/user/${userId}`), {
       method: "GET",
       credentials: "include",
     });
@@ -110,7 +110,7 @@ const PostApi = (function () {
     );
   }
   async function getFromKeyword(keyword) {
-    return await fetch(`/api/posts/search/${keyword}`, {
+    return await fetch(withBase(`/api/posts/search/${keyword}`), {
       method: "GET",
       credentials: "include",
     });
@@ -184,7 +184,7 @@ const FollowApi = (function () {
   const fetchFromCandidates = async (urls, options = {}) => {
     let lastResponse = null;
     for (const url of urls) {
-      const response = await fetch(url, {
+      const response = await fetch(withBase(url), {
         credentials: "include",
         ...options,
       });
@@ -202,18 +202,18 @@ const FollowApi = (function () {
   };
 
   const checkUser = async function (username) {
-    return await fetch(`/api/follows/${username}`, {
+    return await fetch(withBase(`/api/follows/${username}`), {
       credentials: "include",
     });
   };
   const addUser = async function (username) {
-    return await fetch(`/api/follows/${username}`, {
+    return await fetch(withBase(`/api/follows/${username}`), {
       method: "POST",
       credentials: "include",
     });
   };
   async function deleteFollow(username) {
-    return await fetch(`/api/follows/${username}`, {
+    return await fetch(withBase(`/api/follows/${username}`), {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -420,13 +420,13 @@ const FollowApi = (function () {
 })();
 const UserApi = (function () {
   const getFromKeyword = async function (keyword) {
-    return await fetch(`/api/users/search/${keyword}`, {
+    return await fetch(withBase(`/api/users/search/${keyword}`), {
       credentials: "include",
     });
   };
 
   const getProfileByUsername = async function (username) {
-    return await fetch(`/api/profile/${encodeURIComponent(username)}`, {
+    return await fetch(withBase(`/api/profile/${encodeURIComponent(username)}`), {
       credentials: "include",
     });
   };

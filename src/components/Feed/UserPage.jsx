@@ -14,20 +14,27 @@ function UserPage({ userInfo, target, openPost, isAuthenticated, onRequireAuth }
 
   useEffect(() => {
     async function fetchUserData() {
-      if (currentPage == "post") {
-        const response = await PostApi.getFromUser(target.username);
-        const data = await response.json();
-        setPostList([...data]);
-      } else {
-        const response = await CommentApi.getFromUser(target.username);
-        const data = await response.json();
-        console.log(data);
-        setCommentList([
-          ...data.map((comment) => {
-            comment.replied = false;
-            return comment;
-          }),
-        ]);
+      try {
+        if (currentPage == "post") {
+          const response = await PostApi.getFromUser(target.username);
+          if (!response.ok) throw new Error(`User posts failed (HTTP ${response.status})`);
+          const data = await response.json();
+          setPostList(Array.isArray(data) ? [...data] : []);
+        } else {
+          const response = await CommentApi.getFromUser(target.username);
+          if (!response.ok) throw new Error(`User comments failed (HTTP ${response.status})`);
+          const data = await response.json();
+          setCommentList([
+            ...((Array.isArray(data) ? data : []).map((comment) => {
+              comment.replied = false;
+              return comment;
+            })),
+          ]);
+        }
+      } catch (error) {
+        console.error("Failed to load user page data:", error);
+        setPostList([]);
+        setCommentList([]);
       }
     }
     fetchUserData();

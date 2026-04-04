@@ -12,6 +12,7 @@ const Header = ({
   isDark,
   setIsDark,
   onRequireAuth,
+  onGoAuth,
 }) => {
   const userId = user?.id;
   const isAuthenticated = Boolean(userId);
@@ -106,7 +107,7 @@ const Header = ({
         ) : (
           <button
             className="header__nav-button"
-            onClick={() => onRequireAuth?.("sử dụng tài khoản cá nhân")}
+            onClick={() => onGoAuth?.()}
           >
             Đăng nhập / Đăng ký
           </button>
