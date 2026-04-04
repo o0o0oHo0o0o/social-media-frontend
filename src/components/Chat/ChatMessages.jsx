@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../../../styles/chat.css';
+import MessageShimmer from './MessageShimmer';
 
 const ChatMessages = ({
   messages = [],
@@ -255,9 +256,7 @@ const ChatMessages = ({
   return (
     <div className="chat-messages-container" onScroll={handleScroll} ref={messagesContainerRef}>
       {loading && (
-        <div className="messages-loading">
-          <p>Loading messages...</p>
-        </div>
+        <MessageShimmer count={4} />
       )}
 
       {!loading && messages.length === 0 && (

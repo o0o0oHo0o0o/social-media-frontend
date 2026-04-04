@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import MediaPreview from './MediaPreview';
 import InlineAudioPlayer from './InlineAudioPlayer';
 import ReactionListModal from './ReactionListModal';
+import MessageShimmer from './MessageShimmer';
 import { getMediaLabel, formatChatTime } from '../../utils/format';
 
 const MessageList = memo(function MessageList({
@@ -504,11 +505,15 @@ const MessageList = memo(function MessageList({
     return null;
   }, [messages, me]);
 
+  if (msgLoading && messages.length === 0) {
+    return <MessageShimmer count={4} />;
+  }
+
   if (messages.length === 0) return <div className="chat-empty">Chưa có tin nhắn.</div>;
 
   return (
     <>
-      {msgLoading && <div style={{ textAlign: 'center', padding: 10, opacity: 0.5, fontSize: 12 }}>Đang tải...</div>}
+      {msgLoading && messages.length > 0 && <MessageShimmer count={2} />}
 
       {messageGroups.map((group, gIdx) => {
         // TIME separator
