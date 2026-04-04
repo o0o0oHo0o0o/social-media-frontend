@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import FeedItem from "../components/Feed/FeedItem";
 import Post from "../components/Feed/Post";
+import FeedShimmer from "../components/Feed/FeedShimmer";
 import Sidebar from "../components/Common/Sidebar";
 import SearchBar from "../components/Common/SearchBar";
 import { FeedApi } from "../utils/feedApi";
@@ -294,7 +295,7 @@ const FeedPage = ({
       />
       {currentView == "post" ? (
         detailLoading || !selectedPost ? (
-          <div className="loading">Loading post...</div>
+          <FeedShimmer count={1} />
         ) : (
           <Post
             userId={userId}
@@ -309,7 +310,7 @@ const FeedPage = ({
         )
       ) : currentView == "user" ? (
         detailLoading || !selectedUser ? (
-          <div className="loading">Loading profile...</div>
+          <FeedShimmer count={1} />
         ) : (
           <UserPage
             userInfo={userInfo}
@@ -320,7 +321,7 @@ const FeedPage = ({
           ></UserPage>
         )
       ) : loading ? (
-        <div className="loading">Loading...</div>
+        <FeedShimmer count={3} />
       ) : currentView == "search" ? (
         <SearchPage
           userInfo={userInfo}
