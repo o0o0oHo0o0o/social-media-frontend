@@ -234,6 +234,22 @@
   white-space: pre-wrap;
 }
 
+.chat-bubble,
+.chat-bubble-content,
+.message-text {
+  color: inherit;
+}
+
+.chat-bubble.me .chat-bubble-content,
+.chat-bubble.me .message-text {
+  color: #ffffff;
+}
+
+.chat-bubble.other .chat-bubble-content,
+.chat-bubble.other .message-text {
+  color: #dbeeff;
+}
+
 .chat-status-line {
   display: flex;
   justify-content: flex-end;
