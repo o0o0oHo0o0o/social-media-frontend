@@ -133,7 +133,16 @@ export default function InlineAudioPlayer({ src }) {
           onClick={(e) => {
             e.stopPropagation();
             const audio = audioRef.current;
-            if (audio.paused) audio.play();
+            if (audio.paused) {
+              const playPromise = audio.play();
+              if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch((err) => {
+                  if (err?.name !== 'AbortError') {
+                    console.error('[InlineAudioPlayer] play() failed:', err);
+                  }
+                });
+              }
+            }
             else audio.pause();
           }}
           style={{

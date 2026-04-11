@@ -96,7 +96,14 @@ const AudioPlayer = ({ audioUrl, fileSize, fileName, isMe }) => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        const playPromise = audioRef.current.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch((err) => {
+            if (err?.name !== 'AbortError') {
+              console.error('[AudioPlayer] play() failed:', err);
+            }
+          });
+        }
       }
     }
   };

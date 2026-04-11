@@ -53,6 +53,8 @@ const LoginForm = ({ onSwitchToRegister, onLoginSuccess, hideHeader = false, hid
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     const newErrors = {
       identifier: validateField('identifier', formData.identifier),
       password: validateField('password', formData.password)
