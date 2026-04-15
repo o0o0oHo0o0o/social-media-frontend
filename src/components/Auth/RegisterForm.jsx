@@ -109,7 +109,7 @@ const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess, hideHeader = false, 
       // Ưu tiên hook từ Provider, fallback sang util nếu chưa sẵn
       const recaptchaToken = executeRecaptcha
         ? await executeRecaptcha('register')
-        : await getRecaptchaToken(CONFIG.RECAPTCHA_SITE_KEY, 'register');
+        : await getRecaptchaToken('register');
 
       if (!recaptchaToken || typeof recaptchaToken !== 'string') {
         throw new Error('Không thể khởi tạo reCAPTCHA. Vui lòng tải lại trang hoặc kiểm tra site key.');
@@ -124,9 +124,11 @@ const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess, hideHeader = false, 
         // Bổ sung các field tùy chọn để khớp DTO phía server
         authProvider: 'LOCAL',
       };
-      // Nếu là EMAIL, gửi thêm email. Có thể map username theo fullName/identifier nếu backend cần.
+      // Set email hoặc phoneNumber tùy theo channel
       if (channel === 'EMAIL') {
         payload.email = normalizedIdentifier;
+      } else if (channel === 'SMS') {
+        payload.phoneNumber = normalizedIdentifier;
       }
       // Gợi ý: nếu backend yêu cầu username, có thể set mặc định
       if (!payload.username) {
